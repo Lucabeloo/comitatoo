@@ -3,345 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accesso - Ciao.it</title>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="138573323485-1ir2qhidi0pb862odi9d02q19t7o3bm1.apps.googleusercontent.com">
+    <title>Accedi con Google Demo Completa</title>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            margin: 0;
+            background-color: #f0f2f5;
         }
-        
-        .container {
+
+        .login-container {
             background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 500px;
-            padding: 40px;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-        }
-        
-        .logo {
-            font-size: 36px;
-            font-weight: bold;
-            color: #1a73e8;
-            margin-bottom: 10px;
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
-        
-        p {
-            color: #666;
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-        
-        .login-section {
-            margin-bottom: 30px;
-        }
-        
-        .g-signin-container {
-            margin: 25px 0;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .g_id_signin {
-            margin: 0 auto;
-        }
-        
-        .dashboard {
-            display: none;
-        }
-        
-        .user-info {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            text-align: left;
-        }
-        
-        .user-info img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            margin-right: 15px;
-            border: 3px solid #1a73e8;
-        }
-        
-        .user-details h3 {
-            color: #333;
-            margin-bottom: 5px;
-            font-size: 18px;
-        }
-        
-        .user-details p {
-            color: #666;
-            margin-bottom: 0;
-            font-size: 14px;
-        }
-        
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            max-width: 400px;
             width: 100%;
-            padding: 16px;
-            margin-bottom: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: white;
-            gap: 10px;
         }
-        
-        .btn-cogestione {
-            background: linear-gradient(to right, #4CAF50, #45a049);
+
+        h1 {
+            color: #3c4043;
+            margin-bottom: 20px;
         }
-        
-        .btn-cogestione:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-        }
-        
-        .btn-merch {
-            background: linear-gradient(to right, #2196F3, #0b7dda);
-        }
-        
-        .btn-merch:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
-        }
-        
-        .btn-form {
-            background: linear-gradient(to right, #FF9800, #e68900);
-        }
-        
-        .btn-form:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
-        }
-        
-        .btn-logout {
-            background: linear-gradient(to right, #f44336, #d32f2f);
+
+        #status-message {
             margin-top: 20px;
+            color: #5f6368;
+            min-height: 20px;
+            font-size: 0.9em;
         }
-        
-        .btn-logout:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
-        }
-        
-        .error-message {
-            color: #f44336;
-            background-color: #ffebee;
-            padding: 12px;
-            border-radius: 8px;
+
+        /* Centra il pulsante generato da Google */
+        .g_id_signin {
             margin-top: 20px;
-            display: none;
-            font-weight: 500;
-        }
-        
-        .success-message {
-            color: #4CAF50;
-            background-color: #e8f5e9;
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 20px;
-            display: none;
-            font-weight: 500;
-        }
-        
-        .footer {
-            margin-top: 30px;
-            color: #888;
-            font-size: 14px;
-        }
-        
-        .icon {
-            font-size: 20px;
-        }
-        
-        .instructions {
-            background-color: #e3f2fd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            text-align: left;
-            font-size: 14px;
-        }
-        
-        .instructions h3 {
-            color: #1565c0;
-            margin-bottom: 10px;
-        }
-        
-        @media (max-width: 500px) {
-            .container {
-                padding: 25px;
-            }
-            
-            .user-info {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .user-info img {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
+            display: flex;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">Ciao.it</div>
-        <h1>Accesso Area Riservata</h1>
-        
-        <div id="login-section" class="login-section">
-            <p>Accedi con il tuo account Google <strong>@ciao.it</strong> per accedere ai contenuti esclusivi.</p>
-            
-            <div class="g-signin-container">
-                <div class="g_id_signin" data-type="standard" data-theme="filled_blue" data-text="signin_with" data-shape="rectangular" data-logo_alignment="left" data-width="300"></div>
-            </div>
-            
-            <div id="error-message" class="error-message">
-                Accesso consentito solo per indirizzi email @ciao.it
-            </div>
-            
-            <div id="success-message" class="success-message">
-                Accesso effettuato con successo!
-            </div>
-            
-            <div class="instructions">
-                <h3>Come accedere:</h3>
-                <ol>
-                    <li>Clicca sul pulsante "Accedi con Google" qui sopra</li>
-                    <li>Scegli il tuo account Google con email @ciao.it</li>
-                    <li>Autorizza l'applicazione ad accedere al tuo profilo</li>
-                    <li>Se l'email è corretta, avrai accesso alla dashboard</li>
-                </ol>
-            </div>
+
+    <div class="login-container">
+        <h1>Accedi al Sito</h1>
+
+        <div id="g_id_onload"
+             data-client_id="235299476731-ruedeqok6pskru1fr7opgbl20eub9t6s.apps.googleusercontent.com" 
+             data-callback="handleCredentialResponse"
+             data-auto_prompt="false"
+             data-context="signin"
+             data-ux_mode="popup">
         </div>
-        
-        <div id="dashboard" class="dashboard">
-            <div class="user-info">
-                <img id="user-picture" src="" alt="Foto profilo">
-                <div class="user-details">
-                    <h3 id="user-name">Nome Utente</h3>
-                    <p id="user-email">email@example.com</p>
-                </div>
-            </div>
-            
-            <h2>Benvenuto nell'area riservata!</h2>
-            <p>Scegli una delle seguenti opzioni:</p>
-            
-            <a href="https://sito-cogestione.ciao.it" class="btn btn-cogestione" target="_blank">
-                <span class="icon">🏫</span>
-                Sito Cogestione
-            </a>
-            <a href="https://merch.ciao.it" class="btn btn-merch" target="_blank">
-                <span class="icon">🛍️</span>
-                Negozio Merch
-            </a>
-            <a href="https://forms.ciao.it" class="btn btn-form" target="_blank">
-                <span class="icon">📋</span>
-                Tutti i Form
-            </a>
-            
-            <button id="logout-btn" class="btn btn-logout">
-                <span class="icon">🚪</span>
-                Esci
-            </button>
+
+        <div class="g_id_signin"
+             data-type="standard"
+             data-size="large"
+             data-theme="outline"
+             data-text="signin_with"
+             data-shape="rectangular"
+             data-logo_alignment="left">
         </div>
-        
-        <div class="footer">
-            &copy; 2023 Ciao.it - Accesso riservato al personale autorizzato
-        </div>
+
+        <p id="status-message">In attesa di accesso. Assicurati che il tuo Client ID sia corretto e che l'origine JavaScript sia autorizzata in Google Cloud Console.</p>
     </div>
 
     <script>
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            var email = profile.getEmail();
-            
-            console.log('ID: ' + profile.getId());
-            console.log('Nome: ' + profile.getName());
-            console.log('Email: ' + email);
-            
-            // Verifica che l'email sia del dominio @ciao.it
-            if (email.endsWith('@ciao.it')) {
-                // Accesso consentito
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('error-message').style.display = 'none';
-                document.getElementById('success-message').style.display = 'block';
-                
-                // Mostra i dati dell'utente
-                document.getElementById('user-picture').src = profile.getImageUrl();
-                document.getElementById('user-name').textContent = profile.getName();
-                document.getElementById('user-email').textContent = email;
-                
-                // Nascondi il messaggio di successo dopo 3 secondi
-                setTimeout(function() {
-                    document.getElementById('success-message').style.display = 'none';
-                }, 3000);
-            } else {
-                // Accesso negato
-                document.getElementById('error-message').style.display = 'block';
-                // Disconnette l'utente
-                signOut();
-            }
-        }
-        
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('Utente disconnesso.');
-                document.getElementById('login-section').style.display = 'block';
-                document.getElementById('dashboard').style.display = 'none';
-                document.getElementById('error-message').style.display = 'none';
+        /**
+         * Funzione di callback chiamata da Google quando l'utente completa l'accesso.
+         * @param {object} response - L'oggetto contenente l'ID token nel campo 'credential'.
+         */
+        function handleCredentialResponse(response) {
+            const id_token = response.credential;
+            const statusMessage = document.getElementById('status-message');
+
+            statusMessage.style.color = 'green';
+            statusMessage.innerHTML = '✅ Accesso Riuscito! Token ricevuto. (Controlla la console del browser per il token).';
+
+            console.log("---------------------------------------------------------");
+            console.log("ID Token da inviare al server (BACKEND):");
+            console.log(id_token);
+            console.log("---------------------------------------------------------");
+
+            // ⚠️ PASSO CRITICO PER LA SICUREZZA ⚠️
+            // Questo token DEVE essere inviato al tuo server (backend) per essere
+            // convalidato in modo sicuro prima di concedere l'accesso.
+            // NON FIDARTI MAI SOLO DELLA RISPOSTA LATO CLIENT.
+
+            /* // Esempio di come inviare il token al server:
+            fetch('/api/verifica-google-token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ token: id_token })
+            })
+            .then(res => {
+                if (res.ok) {
+                    // Reindirizza l'utente dopo la verifica del server
+                    // window.location.href = '/dashboard.html';
+                } else {
+                    statusMessage.style.color = 'red';
+                    statusMessage.innerHTML = '❌ Errore nella verifica del token lato server.';
+                }
             });
+            */
         }
-        
-        // Gestione del logout tramite pulsante
-        document.getElementById('logout-btn').addEventListener('click', function() {
-            signOut();
-        });
-        
-        // Inizializza l'API di Google quando la pagina è caricata
-        window.onload = function() {
-            gapi.load('auth2', function() {
-                gapi.auth2.init({
-                    client_id: '138573323485-1ir2qhidi0pb862odi9d02q19t7o3bm1.apps.googleusercontent.com'
-                }).then(function() {
-                    console.log('Google Auth API inizializzata');
-                });
-            });
-        };
     </script>
+
 </body>
 </html>
